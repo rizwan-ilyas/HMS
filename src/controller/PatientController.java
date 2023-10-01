@@ -10,7 +10,7 @@ public class PatientController {
     static PatientController patientController;
     public PatientController(){
         patients=new Vector<>();
-        populateDummyPatients();
+        //populateDummyPatients();
     }
     public static PatientController getInstance(){
         if(patientController==null){
