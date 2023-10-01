@@ -8,6 +8,7 @@ public class HospitalManagementSystem {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                // Create an instance of HospitalSystemScreen to start the application
                 new HospitalSystemScreen();
             }
         });
@@ -39,6 +40,7 @@ class HospitalSystemScreen {
         addPatientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // When "Add Patient" button is clicked, open the Add Patient screen
                 openAddPatientScreen();
             }
         });
@@ -46,6 +48,7 @@ class HospitalSystemScreen {
         addDoctorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // When "Add Doctor" button is clicked, open the Add Doctor screen
                 openAddDoctorScreen();
             }
         });
@@ -53,6 +56,7 @@ class HospitalSystemScreen {
         addAppointmentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // When "Add Appointment" button is clicked, open the Add Appointment screen
                 openAddAppointmentScreen();
             }
         });

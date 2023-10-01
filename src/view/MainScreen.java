@@ -4,11 +4,19 @@ package view;
 import controller.AppointmentController;
 import controller.DoctorController;
 import controller.PatientController;
+import model.Appointment;
+import model.Doctor;
+import model.Patient;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Vector;
+import java.util.logging.SimpleFormatter;
 
 public class MainScreen {
 
@@ -45,6 +53,10 @@ public class MainScreen {
         JButton addDoctorButton = new JButton("Add Doctor");
         JButton addAppointmentButton = new JButton("Add Appointment");
 
+        JButton allPatientButton = new JButton("All Patient");
+        JButton allDoctorButton = new JButton("All Doctor");
+        JButton allAppointmentButton = new JButton("All Appointment");
+
         // Add action listeners to the buttons
         addPatientButton.addActionListener(new ActionListener() {
             @Override
@@ -67,19 +79,57 @@ public class MainScreen {
             }
         });
 
+        allPatientButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                DisplayAll displayAll=new DisplayAll("All Patient's Info",MainScreen.this.patientController.getCoulmns(),MainScreen.this.patientController.getPatients());
+                displayAll.display();
+
+            }
+        });
+
+        allDoctorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                DisplayAll displayAll=new DisplayAll("All Doctors's Info",MainScreen.this.doctorController.getCoulmns(),MainScreen.this.doctorController.getDoctors());
+                displayAll.display();
+            }
+        });
+
+        allAppointmentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                DisplayAll displayAll=new DisplayAll("All Appointment's Info",MainScreen.this.appointmentController.getCoulmns(),MainScreen.this.appointmentController.getAppointments());
+                displayAll.display();
+            }
+        });
+
+
+
         buttonsPanel.add(addPatientButton);
         buttonsPanel.add(addDoctorButton);
         buttonsPanel.add(addAppointmentButton);
 
+        buttonsPanel.add(allPatientButton);
+        buttonsPanel.add(allDoctorButton);
+        buttonsPanel.add(allAppointmentButton);
         // Add components to the main panel
         mainPanel.add(titleLabel, BorderLayout.NORTH);
         mainPanel.add(buttonsPanel, BorderLayout.CENTER);
 
         frame.add(mainPanel);
-        frame.setVisible(true);
+
 
 
     }
+
+    public void display(){
+        frame.setVisible(true);
+    }
+
 
     private void openAddPatientScreen() {
         JFrame addPatientFrame = new JFrame("Add Patient");
@@ -124,12 +174,34 @@ public class MainScreen {
         gbc.gridx = 1;
         panel.add(txtdisease, gbc);
 
+        JButton add=new JButton("Add");
         gbc.gridx = 1;
         gbc.gridy = 6;
-        panel.add(new JButton("Add"), gbc);
+        panel.add(add, gbc);
+
+        JLabel lblNotifi=new JLabel("");
+        gbc.gridx = 1;
+        gbc.gridy = 7;
+        panel.add(lblNotifi, gbc);
+        add.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Patient patient=new Patient(Integer.valueOf(txtid.getText()),txtname.getText(),
+                        txtaddress.getText(),txtphNumber.getText(),txtdisease.getText());
+                patientController.setPatients(patient);
+
+                lblNotifi.setText("Patient Added");
+                txtid.setText("");
+                txtname.setText("");
+                txtaddress.setText("");
+                txtdisease.setText("");
+                txtphNumber.setText("");
+
+
+            }
+        });
 
         addPatientFrame.add(panel);
-
 
         // Add your code to design and display the "Add Patient" screen here
         addPatientFrame.setSize(500, 600);
@@ -142,6 +214,8 @@ public class MainScreen {
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
+
+        JLabel lblNotifi=new JLabel("");
 
         JTextField txtname = new JTextField(15);
         JTextField txtaddress = new JTextField(15);
@@ -202,11 +276,37 @@ public class MainScreen {
         gbc.gridx = 1;
         panel.add(txtphNumber, gbc);
 
+        JButton btnAdd=new JButton("Add");
+
         gbc.gridx = 1;
         gbc.gridy = 7;
-        panel.add(new JButton("Add"), gbc);
+        panel.add(btnAdd, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 8;
+        panel.add(lblNotifi, gbc);
+
 
         addDoctorFrame.add(panel);
+
+        btnAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Doctor doctor=new Doctor(txtname.getText(),txtaddress.getText(),
+                        txtphNumber.getText(),Integer.valueOf(txtid.getText()),
+                        txtspecialization.getText(), Integer.valueOf(txtexperience.getText()),
+                        Double.valueOf(txtfee.getText()));
+                doctorController.addDoctor(doctor);
+                txtfee.setText("");
+                txtexperience.setText("");
+                txtaddress.setText("");
+                txtid.setText("");
+                txtname.setText("");
+                txtphNumber.setText("");
+                txtspecialization.setText("");
+                lblNotifi.setText("Doctor Added");
+            }
+        });
 
         // Add your code to design and display the "Add Doctor" screen here
         addDoctorFrame.setSize(500, 600);
@@ -224,6 +324,8 @@ public class MainScreen {
         JTextField txtDoctorId = new JTextField(15);
         JLabel lblFee=new JLabel("0");
         JLabel lblName=new JLabel(" ");
+
+        JLabel lblNotifi=new JLabel("");
 
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.gridx = 0;
@@ -254,15 +356,38 @@ public class MainScreen {
         gbc.gridx = 1;
         panel.add(lblFee, gbc);
 
+        JButton btnAdd=new JButton("Add");
         gbc.gridx = 1;
         gbc.gridy = 6;
-        panel.add(new JButton("Add"), gbc);
+        panel.add(btnAdd, gbc);
+
+
+        gbc.gridx = 1;
+        gbc.gridy = 7;
+        panel.add(lblNotifi, gbc);
 
         addAppointmentFrame.add(panel);
+
+        btnAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd/MM/yyyy");
+                Appointment appointment=new Appointment(Integer.valueOf(txtDoctorId.getText()),
+                        Integer.valueOf(txtPatientsId.getText()),simpleDateFormat.format(Date.valueOf(LocalDate.now())) );
+
+                appointmentController.addAppointment(appointment);
+                txtPatientsId.setText("");
+                txtDoctorId.setText("");
+
+                lblNotifi.setText("Appointment Added");
+            }
+        });
+
 
         // Add your code to design and display the "Add Appointment" screen here
         addAppointmentFrame.setSize(500, 600);
         addAppointmentFrame.setVisible(true);
+        addAppointmentFrame.setLocationRelativeTo(null);
     }
 
 }
