@@ -83,7 +83,7 @@ public class MainScreen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                DisplayAll displayAll=new DisplayAll("All Patient's Info",MainScreen.this.patientController.getCoulmns(),MainScreen.this.patientController.getPatients());
+                DisplayAll displayAll=new DisplayAll("All Patient's Info",MainScreen.this.patientController.getCoulmns(),MainScreen.this.patientController.getPatients(),patientController);
                 displayAll.display();
 
             }
@@ -93,7 +93,7 @@ public class MainScreen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                DisplayAll displayAll=new DisplayAll("All Doctors's Info",MainScreen.this.doctorController.getCoulmns(),MainScreen.this.doctorController.getDoctors());
+                DisplayAll displayAll=new DisplayAll("All Doctors's Info",MainScreen.this.doctorController.getCoulmns(),MainScreen.this.doctorController.getDoctors(),doctorController);
                 displayAll.display();
             }
         });
@@ -102,7 +102,7 @@ public class MainScreen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                DisplayAll displayAll=new DisplayAll("All Appointment's Info",MainScreen.this.appointmentController.getCoulmns(),MainScreen.this.appointmentController.getAppointments());
+                DisplayAll displayAll=new DisplayAll("All Appointment's Info",MainScreen.this.appointmentController.getCoulmns(),MainScreen.this.appointmentController.getAppointments(),appointmentController);
                 displayAll.display();
             }
         });

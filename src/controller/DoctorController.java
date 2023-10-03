@@ -7,7 +7,7 @@ import javax.print.Doc;
 import java.util.Base64;
 import java.util.Vector;
 
-public class DoctorController {
+public class DoctorController implements UpdateInterface{
 
     static DoctorController doctorController;
     Vector<Doctor> doctors;
@@ -56,7 +56,35 @@ doctors=new Vector<>();
         return columns;
     }
 
+    public void update(int row,int col,String value){
+        switch (col){
+            case 0:
+                doctors.get(row).setId(Integer.valueOf(value));
+                break;
+            case 1:
+                doctors.get(row).setName(value);
+                break;
+            case 2:
+                doctors.get(row).setAddress(value);
+                break;
+            case 3:
+                doctors.get(row).setPhNumber(value);
+                break;
+            case 4:
+                doctors.get(row).setSpecialization(value);
+                break;
+            case 5:
+                doctors.get(row).setExperience(Integer.valueOf(value));
+                break;
+            case 6:
+                doctors.get(row).setFee(Double.valueOf(value));
+                break;
+            default:
+                // do nothing
+        }
 
+
+    }
 
 
     public void populateDummyDoctors(){

@@ -4,7 +4,7 @@ import model.Appointment;
 
 import java.util.Vector;
 
-public class AppointmentController {
+public class AppointmentController implements UpdateInterface{
 
     static AppointmentController appointmentController;
     Vector<Appointment> appointments;
@@ -45,7 +45,20 @@ public class AppointmentController {
         return columns;
     }
 
+    public void update(int row,int col,String value){
+        switch (col){
+            case 0:
+                appointments.get(row).setDoctor_id(Integer.valueOf(value));
+                break;
+            case 1:
+                appointments.get(row).setPatient_id(Integer.valueOf(value));
+                break;
+            default:
+                // do nothing
+        }
 
+
+    }
     public void populateDummyAppointments() {
         Appointment p = new Appointment(1, 1, "Fever");
         Appointment p1 = new Appointment(1, 1, "Fever");
